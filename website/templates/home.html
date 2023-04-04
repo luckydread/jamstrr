@@ -1,0 +1,59 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="col-md offset-md-3">
+    {%if user.is_authenticated%}
+    <h1>Records</h1>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telephone</th>
+          <th scope="col">ID</th>
+
+        </tr>
+      </thead>
+      <tbody>
+    {%if records%}
+    {%for record in records%}
+     
+          <tr>
+            <td>{{record.first_name}} </td>
+            <td>{{record.last_name}} </td>
+            <td>{{record.email}} </td>
+            <td>{{record.phone}} </td>
+            <td><a href="{% url 'record' record.id%}">{{record.id}}</a></td>
+
+
+
+          </tr>
+          {% endfor %}
+
+    {%endif%}
+        </tbody>
+      </table>
+    
+    {%else%}
+    <h1>Login</h1>
+    <br/>
+    <form method="post" action="{%url 'home'%}">
+
+        {%csrf_token%}
+        <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="text" class="form-control" name="username" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-secondary">Login</button>
+          </form>
+    </form>
+
+</div>
+{%endif%}
+{%endblock%}
